@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Summarizer</title>
+  <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}"> -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='options.css') }}">
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="blur-circle1"></div>
+    <div class="blur-circle2"></div>
+
+    <div class="landing-page">
+      <header>
+        <div class="container">
+          <a href="#" class="logo">Smart <b>Summarizer</b></a>
+          <ul class="links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/aboutus">About Us</a></li>
+            
+            <!-- <li><a href="/">Log Out</a></li> -->
+            <div class="bg"></div>
+            </ul>
+        </div>
+      </header>
+      <div class="info">
+        <!-- <h1>We Offer..</h1> -->
+        <!-- <button><a href="/aboutus">Explore Options</a></button> -->
+      </div>
+
+      <div class="box">
+        <div class="container">
+          <div class="bg"></div>
+          <div class="button-container">
+            <button class="box-button" onclick="window.location.href = '/index';">
+                <img src="static\images\font.png" sizes="35px" alt="Unable to load" />
+              <p>Text SUmmarization</p>
+              <div class="bg"></div>
+            </button>
+            <button class="box-button" onclick="window.location.href = '/youtube';">
+              <img src="static\images\youtube (1).png" sizes="35px" alt="Unable to load" >
+              <p>Video Transcript Summarization</p>
+            </button>
+            <button class="box-button"  onclick="window.location.href = '/urlsummarize';">
+              <img src="static\images\www.png" sizes="35px" alt="Unable to load" >
+              <p>URL Summarizaton</p>
+            </button>
+            <div class="bg"></div>
+            <button class="box-button"  onclick="window.location.href = '/fileupload';">
+              <img src="static\images\google-docs.png" sizes="35px" alt="Unable to load" >
+              <p>Document</p>
+            </button>
+            <!-- <button class="box-button"  onclick="window.location.href = '/mcq';">
+              <img src="https://cdni.iconscout.com/illustration/premium/thumb/online-mcq-test-8297419-6629157.png?f=webp">
+              <p>MCQ Generation</p>
+            </button> -->
+          </div>
+
+          </div>
+      </div>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,290 @@
+*{
+  padding: 0px;
+  margin:0px;
+}
+html {
+height:100%;
+}
+
+/* .homepage {
+  height: 460px;
+  background: #eee;
+  border-radius: 60%/10%;
+  transform: translateY(-180px);
+  transition: 0.8s ease-in-out;
+} */
+
+.homepage label {
+  color: #573b8a;
+  transform: scale(0.6);
+}
+
+#chk:checked ~ .homepage {
+  transform: translateY(-500px);
+}
+
+#chk:checked ~ .homepage label {
+  transform: scale(1);
+}
+
+#chk:checked ~ .signup label {
+  transform: scale(0.6);
+}
+
+.main-container{
+  margin:0px;
+  padding: 0px;
+  /* background-color: black; */
+  min-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+}
+.bg {
+animation:slide 3s ease-in-out infinite alternate;
+background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+bottom:0;
+left:-50%;
+opacity:.5;
+position:fixed;
+right:-50%;
+top:0;
+z-index:-1;
+}
+
+.bg2 {
+animation-direction:alternate-reverse;
+animation-duration:4s;
+}
+
+.bg3 {
+animation-duration:5s;
+}
+.content {
+background-color:rgba(255,255,255,.8);
+border-radius:.25em;
+box-shadow:0 0 .25em rgba(0,0,0,.25);
+box-sizing:border-box;
+left:50%;
+padding:10vmin;
+position:fixed;
+text-align:center;
+top:50%;
+transform:translate(-50%, -50%);
+}
+@keyframes slide {
+0% {
+  transform:translateX(-25%);
+}
+100% {
+  transform:translateX(25%);
+}
+}
+
+
+/* .blur-circle1{
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(to bottom,white,pink);
+  border-radius: 50%;
+  filter:blur(120px);
+  position: absolute;
+  left: 10%;
+  top:20%;
+  /* transform: translate(50%); */
+/* }  */
+/* .blur-circle2{
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(to bottom,white,pink);
+  border-radius: 50%;
+  filter:blur(100px);
+  position: absolute;
+  right: 10%;
+  top:20%;
+  /* transform: translate(50%); */
+/* }  */
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin:0;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Small */
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+/* Medium */
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+/* Large */
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+/* End Global Rules */
+
+/* Start Landing Page */
+.landing-page header {
+  min-height: 80px;
+  display: flex;
+}
+@media (max-width: 767px) {
+  .landing-page header {
+    min-height: auto;
+    display: initial;
+  }
+}
+.landing-page header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@media (max-width: 767px) {
+  .landing-page header .container {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+.landing-page header .logo {
+  color: #5d5d5d;
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: 30px;
+}
+@media (max-width: 767px) {
+  .landing-page header .logo {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+.landing-page header .links {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .landing-page header .links {
+    text-align: center;
+    gap: 10px;
+  }
+}
+.landing-page header .links li {
+  margin-left: 30px;
+  color: #5d5d5d;
+  cursor: pointer;
+  transition: .3s;
+}
+@media (max-width: 767px) {
+  .landing-page header .links li {
+    margin-left: auto;
+  }
+}
+.landing-page header .links li:last-child {
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #FFF;
+  background-color: #6c63ff;
+}
+.landing-page header .links li:not(:last-child):hover {
+  color: #6c63ff;
+}
+.landing-page .content .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 140px;
+  min-height: calc(100vh - 80px);
+}
+@media (max-width: 767px) {
+  .landing-page .content .container {
+    gap: 0;
+    min-height: calc(100vh - 101px);
+    justify-content: center;
+    flex-direction: column-reverse;
+  }
+}
+@media (max-width: 767px) {
+  .landing-page .content .info {
+    text-align: center;
+    margin-bottom: 15px 
+  }
+}
+.landing-page .content .info h1 {
+  color: #bbbbbb;
+  font-size: 44px;
+  margin-left: 50;
+}
+.landing-page .content .info p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 15px;
+  color: #b3b3b3;
+}
+.landing-page .content .info button {
+  border: 0;
+  border-radius: 20px;
+  padding: 12px 30px;
+  margin-top: 30px;
+  cursor: pointer;
+  color: #000000;
+  background-color: #6c63ff;
+}
+.landing-page .content .image img {
+  max-width: 100%;
+}
+
+.box-button {
+  width: 150px; /* Adjust the width as needed */
+  height: 200px; /* Adjust the height as needed */
+  background: none;
+  border: none;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
+
+.box-button img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.box-button p {
+  margin-top: 10px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Rest of your CSS styles for other elements */
+
+/* End Landing Page */
+
+.main-image{
+  /* mix-blend-mode:exclusion */
+  width: 600px;
+  height: 400px;
+}
+  h1,p{
+  padding-left: 50;
+  margin-left: 80;
+  color:white;
+}

@@ -1,0 +1,296 @@
+<!doctype html>
+
+
+<html x-data="{colorMode: localStorage.getItem('colorMode') || localStorage.setItem('colorMode', 'light')}" x-init="$watch('colorMode', val => localStorage.setItem('colorMode', val))" x-bind:class="{'dark': colorMode === 'dark' || (colorMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth h-full overflow-y-auto">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+  <link id="heading-font" rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap" media="all" />
+  <style>
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+
+    .logo {
+    color: #5d5d5d;
+    font-style: italic;
+    /* align-self: center; */
+    align-items: center;
+    margin-left: 50px;
+    margin-top: 50px;
+    text-transform: uppercase;
+    font-size: 25px;
+    text-decoration: none; 
+  }
+  
+  @media (max-width: 767px) {
+    header .logo {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  header .links {
+    display: flex;
+    align-items: center;
+    margin-left: 780px;
+    margin-top: 18px;
+    /* justify-content: space-between; */
+  }
+
+  @media (max-width: 767px) {
+  header .links {
+      text-align: left;
+      gap: 15px;
+      /* margin-left: 2px; */
+    }
+  }
+
+
+  header .links li {
+    /* list-style: none;
+     */
+     padding-left: 5px;
+     /* align-items: last baseline;
+      */
+     margin-top: -60px;
+    margin-left: 70px;
+    color: #5d5d5d;
+    cursor: pointer;
+    transition: .3s;
+    list-style: none;
+  }
+  @media (max-width: 767px) {
+     header .links li {
+      margin-left: auto;
+    }
+  }
+
+  header .links a {
+  text-decoration: none; /* Remove underline from links */
+}
+  </style>
+<script>
+    window.tailwind.config = {
+      "darkMode": "class",
+      "theme": {
+        "fontFamily": {
+          "heading": ["DM Sans", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "\"Segoe UI\"", "Roboto", "\"Helvetica Neue\"", "Arial", "\"Noto Sans\"", "sans-serif", "\"Apple Color Emoji\"", "\"Segoe UI Emoji\"", "\"Segoe UI Symbol\"", "\"Noto Color Emoji\""],
+          "body": ["DM Sans", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "\"Segoe UI\"", "Roboto", "\"Helvetica Neue\"", "Arial", "\"Noto Sans\"", "sans-serif", "\"Apple Color Emoji\"", "\"Segoe UI Emoji\"", "\"Segoe UI Symbol\"", "\"Noto Color Emoji\""]
+        },
+        "extend": {
+          "borderRadius": {
+            "global": "5px"
+          },
+          "colors": {
+            "primary": {
+              "50": "#f8f5ff",
+              "100": "#eee6fe",
+              "200": "#ddcefd",
+              "300": "#c1a6fc",
+              "400": "#844df9",
+              "500": "#4d07e4",
+              "600": "#3705a3",
+              "700": "#280477",
+              "800": "#170245",
+              "900": "#0c0123",
+              "950": "#070114",
+              "DEFAULT": "#570df8"
+            },
+            "secondary": {
+              "50": "#fff5fd",
+              "100": "#ffe6f9",
+              "200": "#fecdf3",
+              "300": "#fea4e9",
+              "400": "#fd49d3",
+              "500": "#e802b3",
+              "600": "#a70280",
+              "700": "#79015d",
+              "800": "#470136",
+              "900": "#23001b",
+              "950": "#140010",
+              "DEFAULT": "#f002b8"
+            }
+          }
+        }
+      },
+      "plugins": [window.tailwind.plugin.withOptions(({
+        prefix = "ui"
+      } = {}) => {
+        return ({
+          addVariant
+        }) => {
+          for (let state of ["open", "checked", "selected", "active", "disabled"]) {
+            addVariant(`${prefix}-${state}`, [
+              `&[data-headlessui-state~="${state}"]`,
+              `:where([data-headlessui-state~="${state}"]) &`,
+            ]);
+
+            addVariant(`${prefix}-not-${state}`, [
+              `&[data-headlessui-state]:not([data-headlessui-state~="${state}"])`,
+              `:where([data-headlessui-state]:not([data-headlessui-state~="${state}"])) &:not([data-headlessui-state])`,
+            ]);
+          }
+        };
+      }), ]
+    };
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+</head>
+
+<body x-data="{'openDialogId': ''}" x-on:keydown.escape="openDialogId=''" class='font-body antialiased h-full font-body antialiased text-[#000000] bg-[#fcfcfc] dark:text-[#ffffff] dark:bg-[#031022]'>
+  <header>
+    <div class="container">
+      <a href="/homepage" class="logo">Smart <b>Summarizer</b></a>
+      <ul class="links">
+        <!-- <li>Home</li> -->
+        <li><a href="/">Home</a></li>
+        <li><a href="/options">Summarize</a></li>
+      </ul>
+    </div>
+  </header>
+  <div class="py-11">
+    <div class="text-center flex flex-col gap-y-3 px-2 sm:mx-auto sm:max-w-xl">
+      <p class="dark:text-gray-300">Welcome To</p>
+      <h1 class="font-bold text-3xl text-slate-900 dark:text-gray-100 sm:text-4xl">Smart SUMMARIZER</h1>
+      <p class="text-base dark:text-gray-400 sm:text-lg">With Us summary generation is now easy</p>
+    </div>
+    <div class="grid grid-cols-2 mt-5 gap-y-5 sm:gap-y-0 lg:mx-auto lg:max-w-4xl">
+      <div class="col-span-2 sm:col-span-1"><img class="w-full bg-gray-50" alt="No alt" src="https://images.pexels.com/photos/261857/pexels-photo-261857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" /></div>
+      <div class="col-span-2 px-3 pb-3 dark:border-slate-700 border-gray-50 sm:col-span-1 sm:flex sm:flex-col sm:justify-center sm:pl-7 sm:border-t lg:border-r">
+        <h1 class="font-semibold text-gray-700 tracking-tight text-xl dark:text-gray-200 dark:divide-undefined sm:mb-2 md:my-1">Helps Save Time</h1>
+        <p class="text-base font-normal tracking-tight leading-relaxed dark:divide-undefined dark:text-gray-300">We helps you to save your valuable time by making your jobs easier</p>
+      </div>
+      <div class="col-span-2 px-3 pb-3 order-3 dark:border-slate-700 border-gray-50 sm:col-span-1 sm:flex sm:flex-col sm:justify-center sm:pl-7 sm:order-none sm:border-b lg:border-l">
+        <h1 class="font-semibold text-gray-700 tracking-tight text-xl dark:text-gray-200 dark:divide-undefined sm:mb-2 md:my-1">Precise Summaries</h1>
+        <p class="text-base font-normal tracking-tight leading-relaxed dark:divide-undefined dark:text-gray-300"> Percise and concise summary now generated easily</p>
+      </div>
+      <div class="col-span-2 order-2 sm:col-span-1 sm:order-none"><img class="w-full bg-gray-50" alt="No alt" src="https://images.pexels.com/photos/2203051/pexels-photo-2203051.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" /></div>
+    </div>
+  </div>
+  &nbsp;
+  <section class="py-10">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-wrap w-full px-4 pb-5">
+        <div class="lg:w-1/2 w-full mb-6 lg:mb-0">
+          <h1 class="text-3xl title-font mb-2 text-gray-900 font-bold dark:text-slate-100 sm:text-4xl">Explore the features</h1>
+          <div class="h-1 rounded bg-primary w-14">
+            <div class="p-2"></div>
+          </div>
+        </div>
+        <p class="w-full text-lg leading-snug font-light font-body lg:w-1/2"></p>
+      </div>
+      <div class="flex flex-wrap">
+        <div class="p-4 md:w-1/2 xl:w-1/4">
+          <div class="bg-gray-50 dark:bg-gray-900"><a class="" href="#"><img class="h-50 rounded w-full object-cover object-center mb-2 xl:mb-0"src="static\images\font.png" /></a>
+            <div class="p-6 rounded-lg dark:divide-undefined">
+              <h2 class="text-lg text-gray-900 title-font mb-0 font-heading font-semibold dark:divide-undefined dark:divide-undefined dark:text-gray-200">Mannual Text Summary</h2>
+              <h3 class="tracking-widest text-xs font-medium title-font text-primary mb-2">Mannual text uploading</h3>
+              <p class="">Get summary of a text in just few steps.</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 md:w-1/2 xl:w-1/4">
+          <div class="bg-gray-50 dark:bg-gray-900"><img class="h-50 rounded w-full object-cover object-center mb-2 xl:mb-0" alt="No alt" src="static\images\youtube (1).png"/>
+            <div class="p-6 rounded-lg dark:divide-undefined">
+              <h2 class="text-lg text-gray-900 title-font mb-0 font-semibold dark:text-gray-200 dark:divide-undefined">Youtube Video Summary</h2>
+              <h3 class="tracking-widest text-xs font-medium title-font text-primary mb-2">Summary of Youtube videos with subtitles</h3>
+              <p class="">Summarizes the content of a youtube video and gets you the concise summary of the same</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 md:w-1/2 xl:w-1/4">
+          <div class="bg-gray-50 dark:bg-gray-900"><img class="h-50 rounded w-full object-cover object-center mb-2 xl:mb-0" alt="No alt" src="static\images\www.png" />
+            <div class="p-6 rounded-lg dark:divide-undefined">
+              <h2 class="text-lg text-gray-900 title-font font-semibold mb-0 dark:text-gray-200">URL Summary</h2>
+              <h3 class="tracking-widest text-xs font-medium title-font text-primary mb-2">Web Content Summary</h3>
+              <p class="">Get the summary of a web page by provding the url of the web page</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 md:w-1/2 xl:w-1/4">
+          <div class="bg-gray-50 dark:bg-gray-900"><img class="h-50 rounded w-full object-cover object-center mb-2 xl:mb-0" alt="No alt" src="static\images\google-docs.png" />
+            <div class="p-6 rounded-lg dark:divide-undefined">
+              <h2 class="text-lg text-gray-900 title-font font-semibold mb-0 dark:text-gray-200">Document Summary</h2>
+              <h3 class="tracking-widest text-xs title-font text-primary mb-2 font-medium">Summarizes files</h3>
+              <p class="text-base">Get the summary of Text and PDf files in a giffy!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+    <div class="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+      <h2 class="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight sm:text-4xl md:mx-auto">Some of the Perks of using Smart Summarizer</h2>
+      <p class="text-base md:text-lg">  </p>
+    </div>
+    <div class="max-w-lg space-y-3 sm:mx-auto lg:max-w-xl">
+      <div class="flex items-center p-2 transition-colors duration-200 border shadow group hover:bg-primary-500 hover:border-primary-500 rounded-global">
+        <div class="mr-2"><span class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8"><svg class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8" class="w-6 h-6 transition-colors duration-200 text-deep-purple-accent-400 group-hover:text-white sm:w-8 sm:h-8" stroke="currentColor" viewBox="0 0 52 52">
+              <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+            </svg></span></div><span class="transition-colors duration-200 group-hover:text-white">Faster Summary Generation</span>
+      </div>
+      <div class="flex items-center p-2 transition-colors duration-200 border shadow group hover:border-primary-500 hover:bg-primary-500 rounded-global">
+        <div class="mr-2"><span class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8"><svg class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8" class="w-6 h-6 transition-colors duration-200 text-deep-purple-accent-400 group-hover:text-white sm:w-8 sm:h-8" stroke="currentColor" viewBox="0 0 52 52">
+              <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+            </svg></span></div><span class="transition-colors duration-200 group-hover:text-white">Helps With Your Valuable Time saving.</span>
+      </div>
+      <div class="flex items-center p-2 transition-colors duration-200 border shadow group hover:border-primary-500 hover:bg-primary-500 rounded-global">
+        <div class="mr-2"><span class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8"><svg class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8" class="w-6 h-6 transition-colors duration-200 text-deep-purple-accent-400 group-hover:text-white sm:w-8 sm:h-8" stroke="currentColor" viewBox="0 0 52 52">
+              <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+            </svg></span></div><span class="transition-colors duration-200 group-hover:text-white">A Study Assistant</span>
+      </div>
+      <div class="flex items-center p-2 transition-colors duration-200 border shadow group hover:border-primary-500 hover:bg-primary-500 rounded-global">
+        <div class="mr-2"><span class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8"><svg class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8" class="w-6 h-6 transition-colors duration-200 text-deep-purple-accent-400 group-hover:text-white sm:w-8 sm:h-8" stroke="currentColor" viewBox="0 0 52 52">
+              <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+            </svg></span></div><span class="transition-colors duration-200 group-hover:text-white">So Good That You'll Use This Often</span>
+      </div>
+      <div class="flex items-center p-2 transition-colors duration-200 border shadow group hover:border-primary-500 hover:bg-primary-500 rounded-global">
+        <div class="mr-2"><span class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8"><svg class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8" class="w-6 h-6 transition-colors duration-200 text-deep-purple-accent-400 group-hover:text-white sm:w-8 sm:h-8" stroke="currentColor" viewBox="0 0 52 52">
+              <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+            </svg></span></div><span class="transition-colors duration-200 group-hover:text-white">Enhancements And Advancements Are On The Way.</span>
+      </div>
+      <!-- <div class="flex items-center p-2 transition-colors duration-200 border shadow group hover:border-primary-500 hover:bg-primary-500 rounded-global">
+        <div class="mr-2"><span class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8"><svg class="w-6 h-6 transition-colors duration-200 group-hover:text-white text-primary-500 sm:w-8 sm:h-8" class="w-6 h-6 transition-colors duration-200 text-deep-purple-accent-400 group-hover:text-white sm:w-8 sm:h-8" stroke="currentColor" viewBox="0 0 52 52">
+              <polygon stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" points="29 13 14 29 25 29 23 39 38 23 27 23"></polygon>
+            </svg></span></div><span class="transition-colors duration-200 group-hover:text-white">Yesterday you said tomorrow. Just do it today.</span>
+      </div> -->
+    </div>
+  </div>
+  <div class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+    <div class="mx-auto sm:text-center lg:max-w-2xl">
+      <div class="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+        <div class="">
+          <p class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider uppercase rounded-full bg-secondary text-white"> Connect with us</p>
+        </div>
+        <h2 class="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-slate-900 dark:text-slate-100 sm:text-4xl md:mx-auto">Let us know the Good and the Bad we wanna make it better</h2>
+        <!-- <p class="text-base md:text-lg"> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque rem aperiam, eaque ipsa quae. </p> -->
+      </div>
+      <!-- <div class="mb-4 lg:mb-6"><img class="object-cover w-full h-56 rounded sm:h-64 md:h-80 lg:h-96 lg:object-contain" alt="No alt" src="https://images.unsplash.com/photo-1501139083538-0139583c060f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80" /></div> -->
+      <!-- <p class="max-w-xl mb-4 text-base sm:mx-auto"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ullamco laboris aliquip ex ea. </p><a class="inline-flex items-center font-semibold transition-colors duration-200 text-secondary hover:text-secondary-800" href="#"><span class=""> Learn more </span><span class="inline-block w-3 ml-2"><svg class="inline-block w-3 ml-2" class="inline-block w-3 ml-2" fill="currentColor" viewBox="0 0 12 12"> -->
+            <path d="M9.707,5.293l-5-5A1,1,0,0,0,3.293,1.707L7.586,6,3.293,10.293a1,1,0,1,0,1.414,1.414l5-5A1,1,0,0,0,9.707,5.293Z"></path>
+          </svg></span></a>
+    </div>
+    <div class="">
+      <p class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider uppercase rounded-full bg-secondary text-white"> sreyas.sc@gmail.com</p>
+      <p class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider uppercase rounded-full bg-secondary text-white"> <a href="https://www.sreyas.online/"> sreyas.online</a></p>
+      <p class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider uppercase rounded-full bg-secondary text-white"> writetocompletesummarizer.in</p>
+      <p class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider uppercase rounded-full bg-secondary text-white"> CET Trivandrum</p>
+    </div>
+  </div>
+ 
+</body>
+
+</html>

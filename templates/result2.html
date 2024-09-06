@@ -1,0 +1,31 @@
+<!-- templates/result2.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MCQ Generator Result</title>
+</head>
+<body>
+    <h1>Generated MCQs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>MCQ</th>
+                <th>Choices</th>
+                <th>Correct</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in table_data %}
+            <tr>
+                <td>{{ row.MCQ }}</td>
+                <td>{{ row.Choices }}</td>
+                <td>{{ row.Correct }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>Review</h2>
+    <p>{{ review }}</p>
+</body>
+</html>

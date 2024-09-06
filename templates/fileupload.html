@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Extractor & Summarizer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #1E1E1E;
+      /* background: linear-gradient(-45deg, #272727, #4d4b4b, #ddd4d4, #545555); */
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    } */
+
+    h1 {
+      text-align: center;
+      color: #d7d7d7;
+    }
+
+    .file-upload {
+      margin-bottom: 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+    .file-upload:hover {
+      background-color: #0056b3; /* Darker shade on hover */
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    textarea {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid #177898;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+    }
+
+    .logo {
+      font-style: italic;
+      text-transform: uppercase;
+      font-size: 25px;
+    }
+
+    .hamburger {
+      display: inline-block;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 30px;
+      height: 3px;
+      background: white;
+      margin: 5px 0;
+    }
+
+    .header-links {
+      display: none; /* Initially hidden */
+    position: fixed;
+    top: 50px;
+    left: -250px; /* Hidden off-screen */
+    width: 250px;
+    height: 100%;
+    background: #2D2D2D;
+    flex-direction: column;
+    transition: all 0.3s;
+    z-index: 1000; /* Ensures it's above other content */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+    padding: 20px;
+    }
+
+    .header-links.open {
+      flex-direction: column;
+      display: block; /* Shows the menu when "open" class is applied */
+      left: 0; 
+    }
+
+    .header-links a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin-top: 40px;
+            border-radius: 8px;
+            background: rgb(30,30,30);
+background: linear-gradient(90deg, rgba(30,30,30,1) 0%, rgba(218,46,17,1) 3%, rgba(106,13,164,1) 83%, rgba(74,9,166,1) 100%);
+            border: none; /* No border */
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center; 
+    }
+
+    .header-links a:hover {
+      background: linear-gradient(45deg, #feb47b, #ff7e5f);
+    }
+    .header-links a i {
+    margin-right: 8px; /* Space between icon and text */
+    font-size: 16px; /* Icon size */
+}
+
+/* Adding icons to buttons */
+.header-links a.home {
+    content: "\f015"; /* Example Font Awesome home icon */
+}
+
+.header-links a.summarize {
+    content: "\f0b0"; /* Example Font Awesome magic wand icon */
+}
+
+.header-links a.about {
+    content: "\f05a"; /* Example Font Awesome info circle icon */
+}
+
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <!-- <a href="#" class="logo">Smart <b>Summarizer</b></a> -->
+    <div class="logo">Smart Summarizer</div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="header-links" id="header-links">
+      <a href="/"><i class="fa fa-home"></i> Home</a>
+      <a href="/options"><i class="fa fa-magic"></i> Summarize</a>
+      <a href="/aboutus"><i class="fa fa-info-circle"></i> About Us</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Text Extractor & Summarizer</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <div class="file-upload">
+        <label for="file">Select a file:</label>
+        <input type="file" id="file" name="user_file" accept=".pdf,.docx,.txt">
+        <span id="fileName"></span>
+      </div>
+      <button type="button" id="extractButton">Extract Text</button>
+      <button type="button" id="summarizeButton">Summarize</button>
+    </form>
+    <textarea id="textArea" rows="10" cols="50" placeholder="Extracted text will appear here"></textarea>
+    <div id="summaryResult" style="display: none;">
+      <h2>Summary:</h2>
+      <textarea id="summaryTextArea" rows="10" readonly placeholder="Summary will appear here"></textarea>
+      <div id="icon-container" style="text-align: center; margin-top: 20px;">
+        <img src="static/images/play.png" alt="Text to Speech" onclick="readSummary()" style="cursor: pointer; width: 50px; height: 50px;">
+        <img src="static/images/stop-button.png" alt="Stop" onclick="stopReading()" style="cursor: pointer; width: 50px; height: 50px;">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const headerLinks = document.getElementById("header-links");
+
+    hamburger.addEventListener("click", function() {
+      headerLinks.classList.toggle("open"); // Toggle the menu visibility
+    });
+
+    const extractButton = document.getElementById("extractButton");
+    const summarizeButton = document.getElementById("summarizeButton");
+    const textArea = document.getElementById("textArea");
+
+    extractButton.addEventListener("click", () => {
+      const formData = new FormData(document.getElementById("uploadForm"));
+
+      fetch('/upload', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        textArea.value = data;
+      })
+      .catch(error => {
+        console.error(error);
+        alert("Error: An error occurred during processing.");
+      });
+    });
+
+    summarizeButton.addEventListener("click", () => {
+      const text = textArea.value.trim();
+
+      if (text === '') {
+        alert('No text available for summarization.');
+        return;
+      }
+
+      fetch('/summarizefile', {
+        method: 'POST',
+        body: new URLSearchParams({ text: text })
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("summaryTextArea").value = data; 
+        document.getElementById("summaryResult").style.display = "block";
+      })
+      .catch(error => {
+        console.error(error);
+        alert("Error: An error occurred during summarization.");
+      });
+    });
+
+    function readSummary() {
+      var synth = window.speechSynthesis;
+      var utterThis = new SpeechSynthesisUtterance(document.getElementById("summaryTextArea").value);
+      synth.speak(utterThis);
+    }
+
+    function stopReading() {
+      var synth = window.speechSynthesis;
+      synth.cancel();
+    }
+  </script>
+
+</body>
+</html>
